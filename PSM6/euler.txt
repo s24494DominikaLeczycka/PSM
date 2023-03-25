@@ -1,0 +1,39 @@
+def euler():
+    xs = np.linspace(0, L, n + 1)
+    ys = np.sin(xs)
+    vs = np.zeros(n + 1)
+    accs = np.zeros(n + 1)
+    accs[1:n] = (np.convolve(ys, [1, -2, 1], 'same') / dx ** 2)[1:n]
+
+    Eks = [m / 2 * np.sum(vs ** 2)]
+    Eps = [k / (2 * dx) * np.sum(np.diff(ys) ** 2)]
+    Ecs = [Eks[-1] + Eps[-1]]
+
+    yy = [ys, ]
+    vv = [vs, ]
+    aa = [accs, ]
+
+    for iter in range(iters):
+        ys = yy[iter] + vv[iter] * dt
+        vs = vv[iter] + aa[iter] * dt
+        accs = np.zeros(n + 1)
+        accs[1:n] = (np.convolve(ys, [1, -2, 1], 'same') / dx ** 2)[1:n]
+
+        Eks.append(m / 2 * np.sum(vs ** 2))
+        Eps.append(k / (2 * dx) * np.sum(np.diff(ys) ** 2))
+        Ecs.append(Eks[-1] + Eps[-1])
+
+        yy.append(ys)
+        vv.append(vs)
+        aa.append(accs)
+
+    for ys in yy:
+        plt.plot(np.arange(len(ys)), ys, label="Positions of the string's points in each iteration")
+        plt.title("Positions of the string's points in each iteration")
+    plt.show()
+    plt.plot(np.arange(len(Eks)), Eks, label="Kinetic energy of the whole string over each iteration")
+    plt.title("Energy of the whole string over each iteration")
+    plt.plot(np.arange(len(Eps)), Eps, label="Potential energy of the whole string over each iteration")
+    plt.plot(np.arange(len(Ecs)), Ecs, label="Mechanic energy of the whole string over each iteration")
+    plt.legend()
+    plt.show()
