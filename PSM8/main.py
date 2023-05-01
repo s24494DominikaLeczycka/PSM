@@ -1,20 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from scipy.signal import convolve2d
 
 def count_neighbors(grid):
-    # Using np.roll to shift the grid in all 8 directions and then summing them up
-    up = np.roll(grid, -1, axis=0)
-    down = np.roll(grid, 1, axis=0)
-    left = np.roll(grid, -1, axis=1)
-    right = np.roll(grid, 1, axis=1)
+    kernel = np.array([[1, 1, 1],
+                       [1, 0, 1],
+                       [1, 1, 1]])
 
-    up_left = np.roll(up, -1, axis=1)
-    up_right = np.roll(up, 1, axis=1)
-    down_left = np.roll(down, -1, axis=1)
-    down_right = np.roll(down, 1, axis=1)
-
-    return up + down + left + right + up_left + up_right + down_left + down_right
+    return convolve2d(grid, kernel, mode='same', boundary='wrap')
 
 def game_of_life(grid, rules):
     survive, birth = rules
