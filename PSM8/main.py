@@ -1,3 +1,5 @@
+# This code is an interactive implementation of Conway's Game of Life in Python. The simulation displays two visualizations side-by-side: one showing the cells in black and white (alive or dead) and the other presenting cells with colors according to their state (dying due to loneliness, newly born, ideal neighbors, or dying due to overcrowding). Users can update the rules for cell survival and birth, restart the animation, and view the simulation in real-time.
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -80,7 +82,7 @@ def update(frame, grid, img_bw, img_colored, rules):
     return img_bw, img_colored,
 
 def main():
-    grid_size = 50
+    grid_size = 100
     steps = 100
     survive = [2, 3]
     birth = [3]
@@ -96,7 +98,7 @@ def main():
     custom_cmap = ListedColormap(['white', 'pink', 'deepskyblue', 'limegreen', 'orange'])
     img_colored = ax_colored.imshow(colors, cmap=custom_cmap, interpolation="nearest", vmin=0, vmax=4)
 
-    ani = animation.FuncAnimation(fig, update, fargs=(grid, img_bw, img_colored, rules), frames=steps, interval=200, blit=True)
+    ani = animation.FuncAnimation(fig, update, fargs=(grid, img_bw, img_colored, rules), frames=steps, interval=0, blit=True)
 
     # Create legends
     legend_elements_bw = [Patch(facecolor='black', label='Living cells'),
