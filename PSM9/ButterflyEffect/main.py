@@ -1,3 +1,5 @@
+# Simulation of a butterfly effect using euler's, midpoint (aka improved euler's) and rk4 (Runge-Kutta) methods
+
 import numpy as np
 import matplotlib.pyplot as plt
 
